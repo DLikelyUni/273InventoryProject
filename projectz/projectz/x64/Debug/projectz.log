@@ -1,0 +1,9 @@
+﻿  addItem.cpp
+  alertMessage.cpp
+  filterView.cpp
+  projectz.cpp
+  removeItem.cpp
+  viewItem.cpp
+E:\00-Uni\EE173\projectz\projectz\viewItem.cpp(9,15): warning C4101: 'inv': unreferenced local variable
+  Generating Code...
+  projectz.vcxproj -> E:\00-Uni\EE173\projectz\x64\Debug\projectz.exe
