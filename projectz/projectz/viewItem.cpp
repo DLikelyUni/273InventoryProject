@@ -10,8 +10,8 @@ void inventory::viewItem()
 
     fstream file;
 
-    int quantity{ 0 };
-    string name, type, location, filter;
+    int filter{ -1 };
+    string name, type, location, quantity;
     cout << "\n\n\t\t\t\t\tAll Items";
 
     file.open("E:/Inventory.txt", ios::in);     //opens file
@@ -24,12 +24,20 @@ void inventory::viewItem()
             cout << name << "\t\t" << quantity << "\t\t" << type << "\t\t" << location << "\n";
             file >> name >> quantity >> type >> location;
         }
-
-        system("pause");
-           
-
-      
         
 
+        do {
+            cout << "\n\n\nDo you wish to filter this view? (1=Yes) and (0=No) : ";             //Asks and checks input of user if they wish to filter the view
+            cin >> filter;
+        } while (filter < 0 && filter > 1);
+
+
+        if (filter == 1)                                                                   //If the user wishes to filter the view, it runs the function to filter it
+        {
+            inv.filterView();
+        }
+     
+     system("pause");
+     
      file.close();
 }

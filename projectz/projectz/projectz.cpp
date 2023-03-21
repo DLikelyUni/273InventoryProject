@@ -6,13 +6,15 @@ using namespace std;
 
 int main()
 {
+
+    inventory inv;
     bool exit = false;          //creates infinite loop of menu
+    inv.alertMessage();
+
 
     do {
         int num{ -1 };
-        inventory inv;
-
-        inv.alertMessage();
+       
 
         cout << "\nAdd an Item :: 1";
         cout << "\nRemove an Item :: 2";
