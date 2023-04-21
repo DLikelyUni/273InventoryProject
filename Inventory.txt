@@ -1,0 +1,7 @@
+ cheese 6 canned asda 11 12 2023
+ chicken 6 frozen asda 4 11 2023
+ apple 1 fresh tesco 24 3 2025
+ pear 8 frozen tesco 4 11 2023
+ beef 16 fresh lidl 4 11 2023
+ cream 3 canned lidl 4 11 2023
+ onion 6 fresh tesco 4 11 2023
