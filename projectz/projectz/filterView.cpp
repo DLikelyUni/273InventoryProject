@@ -4,16 +4,14 @@
 
 using namespace std;
 
-void inventory::filterView()
+void inventory::filterView(vector<invItem>& data)
 {
-    inventory inv;
 
-    fstream file;
-    int num, ver{ 0 };
-    string name, quantity, type, location, userInput;
+    int num;
+    string userInput;
+    bool ver = false;
 
-    file.open("E:/Inventory.txt", ios::in);     //opens file
-    file >> name >> quantity >> type >> location;
+
 
     cout << "\n\n How would you like to filter the list?\n\n ";
 
@@ -42,13 +40,13 @@ void inventory::filterView()
 
         cout << "\n\nHere is the filtered list \n\n";
 
-        while (!file.eof()) {
-
-            if (userInput == location)
+        for (int i = 0; i < data.size(); i++)                                                    
+        {                                                                                           
+            if (userInput == data[i].locationIn)
             {
-                cout << name << "\t\t" << quantity << "\t\t" << type << "\t\t" << location << "\n";
+                cout << data[i].nameIn << "\t\t" << data[i].quantityIn << "\t\t" << data[i].typeIn << "\t\t" << data[i].locationIn << "\n";
+
             }
-            file >> name >> quantity >> type >> location;
         }
         break;
 
@@ -65,38 +63,38 @@ void inventory::filterView()
 
             if (userInput == "fresh")                                    //This verifies the users input
             {
-                ver = 1;
+                ver = true;
             }
             else if (userInput == "frozen")
             {
-                ver = 1;
+                ver = true;
             }
             else if (userInput == "canned")
             {
-                ver = 1;
+                ver = true;
             }
 
-        } while (ver != 1);                                         //verification if user typed fresh, frozen or canned
+        } while (ver == false);                                         //verification if user typed fresh, frozen or canned
 
 
         cout << "\n\nHere is the filtered list \n\n";
 
-        while (!file.eof()) 
+        for (int i = 0; i < data.size(); i++)
         {
-
-            if (userInput == type)
+            if (userInput == data[i].typeIn)
             {
-                cout << name << "\t\t" << quantity << "\t\t" << type << "\t\t" << location << "\n";
+                cout << data[i].nameIn << "\t\t" << data[i].quantityIn << "\t\t" << data[i].typeIn << "\t\t" << data[i].locationIn << "\n";
+
             }
-            file >> name >> quantity >> type >> location;
         }
         break;
 
 
-
-
-
     case 3:
+
+
+
+
         break;
     case 4:
         break;

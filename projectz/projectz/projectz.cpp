@@ -1,5 +1,8 @@
 #include <iostream>
 #include "class.h"
+#include<fstream>
+#include<vector>
+#include<string>
 
 
 using namespace std;
@@ -7,12 +10,37 @@ using namespace std;
 int main()
 {
 
+
     inventory inv;
     bool exit = false;          //creates infinite loop of menu
-    inv.alertMessage();
+   // inv.alertMessage();
 
 
     do {
+        inventory inv;
+        invItem item;
+        fstream file;
+
+        vector<invItem> data;
+       
+        string name, quantity, type, location, day, month, year;
+
+        file.open("E:/Inventory.txt", ios::in);
+        file >> name >> quantity >> type >> location >> day >> month >> year;
+
+        while (!file.eof()) {    
+            item.nameIn = name;
+            item.quantityIn = stoi(quantity);
+            item.typeIn = type;
+            item.locationIn = location;
+            item.dayIn = stoi(day);
+            item.monthIn = stoi(month);
+            item.yearIn = stoi(year);
+            data.push_back(item);
+
+            file >> name >> quantity >> type >> location >> day >> month >> year;
+       }
+
         int num{ -1 };
        
 
@@ -32,15 +60,15 @@ int main()
             break;
 
         case 1:                     //function to add items
-            inv.addItem();
+            inv.addItem(data);
             break;
 
         case 2:
-            inv.removeItem();       //function to remove items
+            inv.removeItem(data);       //function to remove items
             break;
 
         case 3:
-            inv.viewItem();         //function to view items
+            inv.viewItem(data);         //function to view items
             break;
 
         default:
@@ -48,4 +76,6 @@ int main()
         }
 
     } while (exit == false);
+
+    
 }

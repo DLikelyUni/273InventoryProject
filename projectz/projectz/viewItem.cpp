@@ -4,25 +4,25 @@
 
 using namespace std;
 
-void inventory::viewItem()
+void inventory::viewItem(vector<invItem>& data)
 {
     inventory inv;
 
-    fstream file;
+    invItem item;
 
     int filter{ -1 };
-    string name, type, location, quantity;
+
     cout << "\n\n\t\t\t\t\tAll Items";
+    cout << "\n\nname\t\tquantity\ttype\t\tlocation\tExpiry Date\n";
+    cout << "----------------------------------------------------------------------------\n";
+       
+        
+        for (int i = 0; i < data.size(); i++)                                                     
+        {                                                                                           
 
-    file.open("E:/Inventory.txt", ios::in);     //opens file
-    file >> name >> quantity >> type >> location;
+            cout << data[i].nameIn << "\t\t" << data[i].quantityIn << "\t\t" << data[i].typeIn << "\t\t" << data[i].locationIn << "\t\t"
+                << data[i].dayIn << "/" << data[i].monthIn << "/" << data[i].yearIn << "\n";
 
-        cout << "\n\nname\t\tquantity"
-            << "\ttype\t\tlocation\n";
-
-        while (!file.eof()) {                   //shows whole file
-            cout << name << "\t\t" << quantity << "\t\t" << type << "\t\t" << location << "\n";
-            file >> name >> quantity >> type >> location;
         }
         
 
@@ -34,10 +34,9 @@ void inventory::viewItem()
 
         if (filter == 1)                                                                   //If the user wishes to filter the view, it runs the function to filter it
         {
-            inv.filterView();
+            inv.filterView(data);
         }
      
      system("pause");
-     
-     file.close();
+    
 }

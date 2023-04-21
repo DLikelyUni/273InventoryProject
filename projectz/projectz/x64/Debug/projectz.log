@@ -1,2 +1,3 @@
-﻿  addItem.cpp
+﻿  projectz.cpp
+E:\00-Uni\EE173\projectz\projectz\projectz.cpp(14,15): warning C4101: 'inv': unreferenced local variable
   projectz.vcxproj -> E:\00-Uni\EE173\projectz\x64\Debug\projectz.exe

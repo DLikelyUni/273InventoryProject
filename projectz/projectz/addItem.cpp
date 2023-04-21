@@ -1,15 +1,19 @@
 #include "class.h"
 #include <fstream>
 #include<iostream>
+#include <vector>
+#include <string>
+#include<algorithm>
 
 using namespace std;
 
-void inventory::addItem() {                                     //This function is to add items
+void inventory::addItem(vector<invItem>& data)
+{
+    invItem item;
 
-    fstream file, file1;
-
-    int quantity{ 0 }, ver{ 0 };
+    int quantity{ 0 }, day{ 0 }, month{ 0 }, year{ 0 };
     string name, type, location;
+    bool check = false, ver = false ;
 
     cout << "\n\n\t\t\t\t New Item";                             //title
 
@@ -39,64 +43,66 @@ void inventory::addItem() {                                     //This function 
 
         if (type == "fresh")                                    //This verifies the users input to one of 3 types of food
         {
-            ver = 1;
+            ver = true;
         }
         else if (type == "frozen")
         {
-            ver = 1;
+            ver = true;
         }
         else if (type == "canned")
         {
-            ver = 1;
+            ver = true;
         }
 
 
-    } while (ver != 1);                                         //verification if user typed fresh, frozen or canned
+    } while (ver == false);                                         //verification if user typed fresh, frozen or canned
 
 
     cout << "\nThe location it is to be stored : ";             //asks for location
     cin >> location;
 
 
-    string nameIn, typeIn, locationIn;
-    int quantityIn, alert{ 0 };
 
-    //Need to add a function to see if all data matches, then it just adds the quantity to the file
+    cout << "\nThe day : ";             
+    cin >> day;
+    cout << "\nThe month : ";                                   //Add condition!!!!!!!!!!!!!
+    cin >> month;
+    cout << "\nThe year : ";            
+    cin >> year;
 
-
-    file1.open("E:/temporary.txt",                          //creates 2 files, 1 to read, the other to rewrite the correct part
-        ios::app | ios::out);
-    file.open("E:/Inventory.txt",
-        ios::in);
-
-
-    file >> nameIn >> quantityIn >> typeIn >> locationIn;
-
-    while (!file.eof()) {
-
-        if (name == nameIn and location == locationIn and type == typeIn) {                //if location and name match, all data is deleted
-            quantityIn += quantity;
-            alert = 1;
+    for (int i = 0; i < data.size(); i++)                                                     //If the user input matches any other stored data then it will
+    {                                                                                           //update the old quantity by adding the new one
+        if (name == data[i].nameIn and location == data[i].locationIn and type == data[i].typeIn 
+            and day == data[i].dayIn and month == data[i].monthIn and year == data[i].yearIn)
+        {
+            data[i].quantityIn = data[i].quantityIn + quantity;
+            check = true;
         }
-        file1 << " " << nameIn << " "
-            << quantityIn << " " << typeIn
-            << " " << locationIn << "\n";
-
-        file >> nameIn >> quantityIn >> typeIn >> locationIn;
     }
 
-    system("pause");
-
-    if (alert != 1)
+    if (check == false)                                 //If it is new data, it will add it to the vectors
     {
-        file1 << " " << name << " "
-            << quantity << " " << type
-            << " " << location << "\n";
+        item.nameIn = name;
+        item.quantityIn = quantity;
+        item.typeIn = type;
+        item.locationIn = location;
+        item.dayIn = day;
+        item.monthIn = month;
+        item.yearIn = year;
+        data.push_back(item);
     }
 
-    file.close();                                               //stores and renames new file of all data not wanting to get rid off
-    file1.close();
+    fstream file;
 
-    remove("E:/Inventory.txt");
-    rename("E:/temporary.txt", "E:/Inventory.txt");
+    file.open("E:/Inventory.txt");                                  //opens and clears the file
+
+    for (int i = 0; i < data.size(); i++)                                         //writes all data stored in vectors into a file
+    {
+        file << " " << data[i].nameIn << " " << data[i].quantityIn << " " << data[i].typeIn << " " << data[i].locationIn 
+            << " " << data[i].dayIn << " " << data[i].monthIn << " " << data[i].yearIn << "\n";
+    }
+
+    file.close();
+
+    std::system("pause");
 }
