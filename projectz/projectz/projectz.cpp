@@ -4,45 +4,44 @@
 #include<vector>
 #include<string>
 
-
 using namespace std;
 
 int main()
 {
-
-
     inventory inv;
     bool exit = false;          //creates infinite loop of menu
-   // inv.alertMessage();
 
+    invItem item;
+    fstream file;
+
+    vector<invItem> data;
+
+    string name, quantity, type, location, day, month, year;
+
+    file.open("E:/Inventory.txt", ios::in);                                                //opens file
+    file >> name >> quantity >> type >> location >> day >> month >> year;
+
+    while (!file.eof()) {                                                                 //Stores all data from file into multiple vectors
+        item.nameIn = name;
+        item.quantityIn = stoi(quantity);
+        item.typeIn = type;
+        item.locationIn = location;
+        item.dayIn = stoi(day);
+        item.monthIn = stoi(month);
+        item.yearIn = stoi(year);
+        item.forDeletion = false;
+        data.push_back(item);
+
+        file >> name >> quantity >> type >> location >> day >> month >> year;
+    }
+    file.close();
+
+    inv.alertMessage(data);
 
     do {
-        inventory inv;
-        invItem item;
-        fstream file;
-
-        vector<invItem> data;
-       
-        string name, quantity, type, location, day, month, year;
-
-        file.open("E:/Inventory.txt", ios::in);
-        file >> name >> quantity >> type >> location >> day >> month >> year;
-
-        while (!file.eof()) {    
-            item.nameIn = name;
-            item.quantityIn = stoi(quantity);
-            item.typeIn = type;
-            item.locationIn = location;
-            item.dayIn = stoi(day);
-            item.monthIn = stoi(month);
-            item.yearIn = stoi(year);
-            data.push_back(item);
-
-            file >> name >> quantity >> type >> location >> day >> month >> year;
-       }
-
         int num{ -1 };
        
+        //Asking user what function they want to do
 
         cout << "\nAdd an Item :: 1";
         cout << "\nRemove an Item :: 2";
@@ -75,7 +74,5 @@ int main()
             cout << "Not in Range";
         }
 
-    } while (exit == false);
-
-    
+    } while (exit == false);   
 }

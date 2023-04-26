@@ -12,17 +12,20 @@ void inventory::viewItem(vector<invItem>& data)
 
     int filter{ -1 };
 
+    //Outputs headers
     cout << "\n\n\t\t\t\t\tAll Items";
     cout << "\n\nname\t\tquantity\ttype\t\tlocation\tExpiry Date\n";
     cout << "----------------------------------------------------------------------------\n";
        
         
+
+        //Outputs all data stored in the vectors in a neat display
         for (int i = 0; i < data.size(); i++)                                                     
         {                                                                                           
-
-            cout << data[i].nameIn << "\t\t" << data[i].quantityIn << "\t\t" << data[i].typeIn << "\t\t" << data[i].locationIn << "\t\t"
-                << data[i].dayIn << "/" << data[i].monthIn << "/" << data[i].yearIn << "\n";
-
+            if (data[i].forDeletion == false) {
+                cout << data[i].nameIn << "\t\t" << data[i].quantityIn << "\t\t" << data[i].typeIn << "\t\t" << data[i].locationIn << "\t\t"
+                    << data[i].dayIn << "/" << data[i].monthIn << "/" << data[i].yearIn << "\n";
+            }
         }
         
 

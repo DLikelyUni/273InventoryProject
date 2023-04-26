@@ -55,20 +55,35 @@ void inventory::addItem(vector<invItem>& data)
         }
 
 
-    } while (ver == false);                                         //verification if user typed fresh, frozen or canned
+    } while (ver == false);                                         //verified if user typed fresh, frozen or canned
 
 
     cout << "\nThe location it is to be stored : ";             //asks for location
     cin >> location;
 
+    for (int i = 0; i < location.length(); i++)                            //Turns name of item to Lowercase
+    {
+        location[i] = tolower(location[i]);
+    }
 
 
-    cout << "\nThe day : ";             
-    cin >> day;
-    cout << "\nThe month : ";                                   //Add condition!!!!!!!!!!!!!
-    cin >> month;
-    cout << "\nThe year : ";            
+
+    while (day < 1 or day > 31)                                //Asks Expiration day
+    {
+        cout << "\nThe experation day : ";
+        cin >> day;
+    }
+   
+    while (month < 1 or month > 12)                             //Asks Expiration month
+    {
+        cout << "\nThe experation month : ";                                   
+        cin >> month;
+    }
+
+    cout << "\nThe experation year : ";                           //Asks Expiration Year
     cin >> year;
+
+
 
     for (int i = 0; i < data.size(); i++)                                                     //If the user input matches any other stored data then it will
     {                                                                                           //update the old quantity by adding the new one
@@ -77,6 +92,7 @@ void inventory::addItem(vector<invItem>& data)
         {
             data[i].quantityIn = data[i].quantityIn + quantity;
             check = true;
+            cout << "\nData ammended\n";
         }
     }
 
@@ -89,18 +105,27 @@ void inventory::addItem(vector<invItem>& data)
         item.dayIn = day;
         item.monthIn = month;
         item.yearIn = year;
+        item.forDeletion = false;
         data.push_back(item);
+
+        cout << "\nNew data added\n";
     }
 
-    fstream file;
 
-    file.open("E:/Inventory.txt");                                  //opens and clears the file
+
+    ofstream file("E:/Inventory.txt");         //opens and clears the file
+    file << "";
 
     for (int i = 0; i < data.size(); i++)                                         //writes all data stored in vectors into a file
     {
-        file << " " << data[i].nameIn << " " << data[i].quantityIn << " " << data[i].typeIn << " " << data[i].locationIn 
-            << " " << data[i].dayIn << " " << data[i].monthIn << " " << data[i].yearIn << "\n";
+        if (data[i].forDeletion == false)
+        {
+            file << " " << data[i].nameIn << " " << data[i].quantityIn << " " << data[i].typeIn << " " << data[i].locationIn
+                << " " << data[i].dayIn << " " << data[i].monthIn << " " << data[i].yearIn << "\n";
+
+        }
     }
+
 
     file.close();
 

@@ -7,15 +7,14 @@
 using namespace std;
 
 void inventory::removeItem(vector<invItem>& data) {
-    
-    inventory inv;   
+       
     invItem item;
 
 
-    int amount, count{ 0 }, j{ 0 }, z{ -1 };
+    int amount{ 0 }, j{ 0 };
     string name, type, location, food, area;
+    bool check = false;           
 
-    //invItem* newish;
 
         cout << "\nWhat item do you wish to remove? : ";                 //Asks user info on what they wish to remove
         cin >> food;
@@ -37,7 +36,9 @@ void inventory::removeItem(vector<invItem>& data) {
 
         while (j < data.size()) {
 
-            if (food == data[j].nameIn and area == data[j].locationIn)              //if location and name match, all data is deleted
+
+            //if what the user inputted matches any data in the file, it will be amended or deleted
+            if (food == data[j].nameIn and area == data[j].locationIn)             
             {
 
                 if (amount < data[j].quantityIn)                          //This if statement checks if the amount entered is < the amount stored and ammends file if true
@@ -49,7 +50,7 @@ void inventory::removeItem(vector<invItem>& data) {
                 else if (amount > data[j].quantityIn)                                 //If the amount entered>the amount stored; therefore no changes are made
                 {
                     cout << "\nThe quantity is too high\n";
-                    cout << " \nNo changes will be made\n\n\n\n";
+                    cout << " No changes will be made\n\n\n\n";
                 }
 
                 else                                                        // Tells user if the item has been deleted
@@ -57,41 +58,41 @@ void inventory::removeItem(vector<invItem>& data) {
 
                     cout << "\nSuccesfuly Deleted\n";
 
+                   data[j].forDeletion = true;                      //Set object attribute so it would not be written back to file
 
-                   // newish = &data[j];
-
-                   // data.erase(remove(data.begin(), data.end(), newish), data.end());
-
-                    z = j;
 
                 }
-                count = 1;                                                  //If no data was ammended or deleted, the variable count will not change
+
+                check = true;                                  //Used to send message after loop if could not find what item the user wanted to delete
             }
 
             
             j++;
         }
 
-        if (count != 1)                                         //Message if could not find item to delete
+        if (check == false)                                         //Message if could not find item to delete
         {
             cout << "\nCould not find the item to delete\n";
         } 
 
 
 
-        fstream file;
-
-        file.open("E:/Inventory.txt");                                  //opens and clears the file
+       ofstream file("E:/Inventory.txt");         //opens and clears the file
+       file << "";
 
         for (int i = 0; i < data.size(); i++)                                         //writes all data stored in vectors into a file
         {
-            file << " " << data[i].nameIn << " " << data[i].quantityIn << " " << data[i].typeIn << " " << data[i].locationIn
-                << " " << data[i].dayIn << " " << data[i].monthIn << " " << data[i].yearIn << "\n";
+            if (data[i].forDeletion == false)
+            {
+                file << " " << data[i].nameIn << " " << data[i].quantityIn << " " << data[i].typeIn << " " << data[i].locationIn
+                    << " " << data[i].dayIn << " " << data[i].monthIn << " " << data[i].yearIn << "\n";
 
+            }
         }
 
         
         file.close();
+        
 
     system("pause");
 }
